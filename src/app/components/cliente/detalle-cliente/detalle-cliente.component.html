@@ -1,0 +1,154 @@
+<!-- <h2>Prueba GetClientes</h2>
+<ul>
+    <li *ngFor="let cliente of clientes">
+        <p>{{cliente.nombres}}: {{cliente.dni}}</p>
+    </li>
+</ul>
+
+<h2>Prueba ClienteByID</h2>
+<input #idInput (keyup)="GetClienteById(idInput.value)" type="text" name="text" id="inputNombre">
+<br> {{clienteById.nombres}}
+<h2>Prueba ClientesByEstado</h2>
+<button (click)="GetClientesByEstado('activo')">activo</button>
+<button (click)="GetClientesByEstado('inactivo')">inactivo</button>
+<div *ngFor="let cliente of clientesByEstado">
+    <h3>{{cliente.nombres}}</h3>
+</div>
+<h2>Prueba ClientesByNombre</h2>
+<input #nombreInput (keyup)="GetClientesByNombre(nombreInput.value)" type="text" name="text" id="inputNombre">
+<div *ngFor="let cliente of clientesByNombre">
+    <h3>{{cliente.nombres}}</h3>
+</div> -->
+
+<!-- Card Light -->
+<div class="card">
+    <!-- Card content -->
+    <div class="card-body">
+        <!-- Title -->
+        <h4 class="card-title">Clientes</h4>
+        <hr>
+        <button class="btn btn-outline-success btn-rounded waves-effect" data-toggle="modal" data-target="#modalCrearForm">Agregar nuevo cliente <i class="fas fa-plus"></i></button>
+        <!-- Table -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-primary" scope="col">#</th>
+                    <th class="text-primary" scope="col">Apellidos</th>
+                    <th class="text-primary" scope="col">Nombres</th>
+                    <th class="text-primary" scope="col">DNI</th>
+                    <th class="text-primary" scope="col">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cliente of clientesByEstado">
+                    <th scope="row"></th>
+                    <td>{{cliente.apellidoPaterno}} {{cliente.apellidoMaterno}}</td>
+                    <td>{{cliente.nombres}}</td>
+                    <td>{{cliente.dni}}</td>
+                    <td>
+                        <span class=""><button (click)="setUpdateCliente(cliente)" type="button" class="btn btn-primary btn-rounded btn-sm my-0" data-toggle="modal" data-target="#modalRegisterForm"> Editar</button></span>
+                        <span class=""><button (click)="setDeleteId(cliente.idCliente)"  type="button"class="btn btn-danger btn-rounded btn-sm my-0" data-toggle="modal" data-target="#centralModalDanger">Eliminar</button></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal guardar -->
+<div class="modal fade" id="modalCrearForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Agregar nuevo cliente</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div [formGroup]="clienteCreateForm" class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <input formControlName="nombres" type="text" id="orangeForm-nombres" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="orangeForm-nombres">Nombre</label>
+                </div>
+                <div class="md-form mb-5">
+                    <input formControlName="apellidoPaterno" type="text" id="orangeForm-apellidoP" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="orangeForm-apellidoP">Apellido Paterno</label>
+                </div>
+                <div class="md-form mb-4">
+                    <input formControlName="apellidoMaterno" type="text" id="orangeForm-apellidoM" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="orangeForm-apellidoM">Apellido Materno</label>
+                </div>
+                <div class="md-form mb-4">
+                    <input formControlName="dni" type="text" id="orangeForm-dni" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="orangeForm-dni">DNI</label>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center text-white">
+                <button (click)="CreateCliente(clienteCreateForm.value)" type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+                <button type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal editar -->
+<div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Editar cliente</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div [formGroup]="clienteUpdateForm" class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <input formControlName="nombres" type="text" id="orangeForm-nombres" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="orangeForm-nombres" class="active">Nombres</label>
+                </div>
+                <div class="md-form mb-5">
+                    <input formControlName='apellidoPaterno' type="text" id="orangeForm-apellidoP" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="orangeForm-apellidoP" class="active">Apellido Paterno</label>
+                </div>
+                <div class="md-form mb-5">
+                    <input formControlName='apellidoMaterno' type="text" id="orangeForm-apellidoM" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="orangeForm-apellidoM" class="active">Apellido Materno</label>
+                </div>
+                <div class="md-form mb-4">
+                    <input formControlName="dni" type="text" id="orangeForm-dni" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="orangeForm-dni" class="active">DNI</label>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center text-white">
+                <button (click)="UpdateCliente(clienteUpdateForm.value)" type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+                <button type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal eliminar -->
+<div class="modal fade" id="centralModalDanger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-danger" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="heading lead">Eliminar cliente</p>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <i class="fas fa-exclamation fa-4x mb-3 animated rotateIn"></i>
+                    <p>Va a eliminar un cliente, ésta acción no se puede deshacer.</p>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button (click)="DeleteCliente()" type="button" class="btn btn-danger" data-dismiss="modal">Aceptar</button>
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>

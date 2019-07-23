@@ -1,0 +1,120 @@
+<!-- Card Light -->
+<div class="card">
+    <!-- Card content -->
+    <div class="card-body">
+        <!-- Title -->
+        <h4 class="card-title">Productos</h4>
+        <hr>
+        <button class="btn btn-outline-success btn-rounded waves-effect" data-toggle="modal" data-target="#modalCrearForm">Agregar nuevo producto <i class="fas fa-plus"></i></button>
+        <!-- Table -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-primary" scope="col">#</th>
+                    <th class="text-primary" scope="col">Descripción</th>
+                    <th class="text-primary" scope="col">Precio</th>
+                    <th class="text-primary" scope="col">Stock</th>
+                    <th class="text-primary" scope="col">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let producto of productos">
+                    <th scope="row"></th>
+                    <td>{{producto.descripcion}}</td>
+                    <td>{{producto.precio}}</td>
+                    <td>{{producto.stock}}</td>
+                    <td>
+                        <span class=""><button (click)="setUpdateProducto(producto)" type="button" class="btn btn-primary btn-rounded btn-sm my-0" data-toggle="modal" data-target="#modalEditarForm"> Editar</button></span>
+                        <span class=""><button (click)="setDeleteId(producto.idProducto)" type="button"class="btn btn-danger btn-rounded btn-sm my-0" data-toggle="modal" data-target="#centralModalDanger">Eliminar</button></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- Modal guardar -->
+<div class="modal fade" id="modalCrearForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Agregar nuevo producto</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div [formGroup]="productoCreateForm" class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <input formControlName="descripcion" type="text" id="orangeForm-descripcion" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="orangeForm-descripcion">Descipción</label>
+                </div>
+                <div class="md-form mb-5">
+                    <input formControlName="precio" type="text" id="orangeForm-precio" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="orangeForm-precio">Precio</label>
+                </div>
+                <div class="md-form mb-4">
+                    <input formControlName="stock" type="text" id="orangeForm-stock" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="orangeForm-stock">Stock</label>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center text-white">
+                <button (click)="CreateProducto(productoCreateForm.value)" type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+                <button type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal editar -->
+<div class="modal fade" id="modalEditarForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Editar producto</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div [formGroup]="productoUpdateForm" class="modal-body mx-3">
+                <div class="md-form mb-5">
+                    <input formControlName="descripcion" type="text" id="orangeForm-descripcion" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="orangeForm-descripcion" class="active">Descipción</label>
+                </div>
+                <div class="md-form mb-5">
+                    <input formControlName="precio" type="text" id="orangeForm-precio" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="orangeForm-precio" class="active">Precio</label>
+                </div>
+                <div class="md-form mb-4">
+                    <input formControlName="stock" type="text" id="orangeForm-stock" class="form-control validate">
+                    <label data-error="wrong" data-success="right" for="orangeForm-stock" class="active">Stock</label>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center text-white">
+                <button (click)="UpdateProducto(productoUpdateForm.value)" type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+                <button type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal eliminar -->
+<div class="modal fade" id="centralModalDanger" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-danger" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="heading lead">Eliminar producto</p>
+
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <i class="fas fa-exclamation fa-4x mb-3 animated rotateIn"></i>
+                    <p>Va a eliminar un producto, ésta acción no se puede deshacer.</p>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button (click)="DeleteProducto()" type="button" class="btn btn-danger" data-dismiss="modal">Aceptar</button>
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
